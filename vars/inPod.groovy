@@ -5,7 +5,7 @@ def call(String podType, String projectName, String k8sCloudName = projectName, 
   // Please bump version if you update containers or volumes
   private static final inPodMap = [
     maven: [
-      version: 0.1.0,
+      version: "0.1.0",
       containers: [
         // Don't use alpine version. It having problem with forking JVM such as running surefire and junit testing
         containerTemplate(name: 'java', image: 'openjdk:11.0.5-jdk-stretch', ttyEnabled: true, command: 'cat'),
@@ -29,7 +29,7 @@ def call(String podType, String projectName, String k8sCloudName = projectName, 
   ]
 
   private def defaultArgs = [
-    label: projectName + inPodMap[podType]['version'].toString(),
+    label: projectName + inPodMap[podType]['version'],
     cloud: k8sCloudName,
     idleMinutes: 360,
     containers: inPodMap[podType]['containers'],
