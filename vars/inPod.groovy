@@ -29,7 +29,7 @@ def call(String podType, String projectName, String k8sCloudName = projectName, 
   ]
 
   private def defaultArgs = [
-    label: projectName + inPodMap[podType]['version'],
+    label: projectName + '-' + inPodMap[podType]['version'],
     cloud: k8sCloudName,
     idleMinutes: 360,
     containers: inPodMap[podType]['containers'],
