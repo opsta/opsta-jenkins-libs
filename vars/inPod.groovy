@@ -39,7 +39,7 @@ def call(String podType, String projectName, String k8sCloudName = projectName, 
   // For containers, add the lists together, but remove duplicates by name,
   // giving precedence to the user specified args.
   private def finalContainers = addWithoutDuplicates((podTemplateArgs.containers ?: []), defaultArgs.containers) { it.getArguments().name }
-  private def finalArgs = defaultArgs << args << [containers: finalContainers]
+  private def finalArgs = defaultArgs << podTemplateArgs << [containers: finalContainers]
 
   podTemplate(finalArgs) {
     node(finalArgs.label) {
