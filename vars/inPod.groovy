@@ -1,5 +1,11 @@
 // Prepare podTemplate
-def call(String podType, String projectName, String k8sCloudName = projectName, Map podTemplateArgs = [:], Closure body) {
+def call(
+  String podType,
+  String projectName,
+  String k8sCloudName = projectName,
+  Map podTemplateArgs = [:],
+  Closure body
+) {
 
   // Assign default containers and volumes for each type of deployment
   // Please bump version if you update containers or volumes
