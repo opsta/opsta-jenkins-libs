@@ -15,7 +15,7 @@ def call(
 
   // Set default optional arguments
   private def defaultArgs = [
-    settingsFilePath = '',
+    mavenSettingsFilePath = '',
     containerName = 'maven',
     jUnitReportPath = ''
   ]
@@ -27,13 +27,13 @@ def call(
       container(args.containerName) {
 
         // Check if need custom maven settings
-        settingsFilePathParameter = ''
-        if(!args.settingsFilePath.isEmpty()) {
-          settingsFilePathParameter = "-s ${args.settingsFilePath}"
+        mavenSettingsFilePathParameter = ''
+        if(!args.mavenSettingsFilePath.isEmpty()) {
+          mavenSettingsFilePathParameter = "-s ${args.mavenSettingsFilePath}"
         }
 
         sh """
-          mvn -e ${settingsFilePathParameter} clean test
+          mvn -e ${mavenSettingsFilePathParameter} clean test
         """
       }
     }

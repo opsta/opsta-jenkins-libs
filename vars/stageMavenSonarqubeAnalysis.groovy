@@ -19,7 +19,7 @@ def call(
   // Set default optional arguments
   private def defaultArgs = [
     sonarQubeMavenPluginVersion: "3.7.0.1746",
-    settingsFilePath: '',
+    mavenSettingsFilePath: '',
     containerName: 'maven'
   ]
   // Replace default optional arguments with parametered arguments
@@ -30,13 +30,13 @@ def call(
       withSonarQubeEnv(sonarQubeEnv) {
 
         // Check if need custom maven settings
-        settingsFilePathParameter = ''
-        if(!args.settingsFilePath.isEmpty()) {
-          settingsFilePathParameter = "-s ${args.settingsFilePath}"
+        mavenSettingsFilePathParameter = ''
+        if(!args.mavenSettingsFilePath.isEmpty()) {
+          mavenSettingsFilePathParameter = "-s ${args.mavenSettingsFilePath}"
         }
 
         sh """
-          mvn ${settingsFilePathParameter} -e \
+          mvn ${mavenSettingsFilePathParameter} -e \
             org.sonarsource.scanner.maven:sonar-maven-plugin:${args.sonarQubeMavenPluginVersion}:sonar
         """
       }
