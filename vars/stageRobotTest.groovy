@@ -28,7 +28,7 @@ def call(
     robotOutputBasePath: 'test/robot/reports',
     robotTestsPath: '/opt/robotframework/tests',
     robotReportsPath: '/opt/robotframework/reports',
-    robotOutputPath: "${args.robotOutputBasePath}/${appName}",
+    robotOutputPath: "${defaultArgs.robotOutputBasePath}/${appName}",
     testBrowser: 'chrome',
     contextPath: ''
   ]
