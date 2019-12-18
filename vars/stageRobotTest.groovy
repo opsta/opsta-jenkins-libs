@@ -28,13 +28,13 @@ def call(
     robotOutputBasePath: 'test/robot/reports',
     robotTestsPath: '/opt/robotframework/tests',
     robotReportsPath: '/opt/robotframework/reports',
-    robotOutputPath: "${defaultArgs.robotOutputBasePath}/${appName}",
     testBrowser: 'chrome',
     contextPath: ''
   ]
+  defaultArgs.put(robotOutputPath: "${defaultArgs.robotOutputBasePath}/${appName}")
   // Replace default optional arguments with parametered arguments
   private def args = defaultArgs << paramArgs
-  
+
   try {
     stage("${appName} Acceptance Test (Robotframework)") {
       container(args.containerName) {
