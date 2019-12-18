@@ -15,9 +15,9 @@ def call(
 
   // Set default optional arguments
   private def defaultArgs = [
-    mavenSettingsFilePath = '',
-    containerName = 'maven',
-    jUnitReportPath = ''
+    mavenSettingsFilePath: '',
+    containerName: 'maven',
+    jUnitReportPath: ''
   ]
   // Replace default optional arguments with parametered arguments
   private def args = defaultArgs << paramArgs
