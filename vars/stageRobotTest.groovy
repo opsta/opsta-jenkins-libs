@@ -31,7 +31,7 @@ def call(
     testBrowser: 'chrome',
     contextPath: ''
   ]
-  defaultArgs.put(robotOutputPath: "${defaultArgs.robotOutputBasePath}/${appName}")
+  defaultArgs['robotOutputPath'] = "${defaultArgs.robotOutputBasePath}/${appName}"
   // Replace default optional arguments with parametered arguments
   private def args = defaultArgs << paramArgs
 
