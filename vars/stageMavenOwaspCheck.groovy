@@ -1,7 +1,7 @@
 /**
   * Run OWASP Dependency Check with Maven
   *
-  * @param args Map of optional variables
+  * @param paramArgs Map of optional variables
   * [
   *   containerName: String       Container name in podTemplate
   *   odcInstallation: String     OWASP Dependency Check Installation Name in Jenkins
@@ -10,7 +10,7 @@
   * ]
   */
 def call(
-  Map args = [:]
+  Map paramArgs = [:]
 ) {
 
   // Set default optional arguments
@@ -21,7 +21,7 @@ def call(
     owaspDataPath: '/home/jenkins/dependency-check-data'
   ]
   // Replace default optional arguments with parametered arguments
-  private def args = defaultArgs << args
+  private def args = defaultArgs << paramArgs
 
   stage('Run OWASP Dependency Check with Maven') {
     container(args.containerName) {

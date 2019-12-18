@@ -1,7 +1,7 @@
 /**
   * Run Maven Unit Tests
   *
-  * @param args Map of optional variables
+  * @param paramArgs Map of optional variables
   * [
   *   containerName: String         Container name in podTemplate
   *   mavenSettingsFilePath: String Custom Maven settings file path
@@ -10,7 +10,7 @@
   * ]
   */
 def call(
-  Map args = [:]
+  Map paramArgs = [:]
 ) {
 
   // Set default optional arguments
@@ -20,7 +20,7 @@ def call(
     jUnitReportPath = ''
   ]
   // Replace default optional arguments with parametered arguments
-  private def args = defaultArgs << args
+  private def args = defaultArgs << paramArgs
 
   try {
     stage('Maven Unit Tests') {

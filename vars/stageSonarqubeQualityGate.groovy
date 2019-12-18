@@ -1,7 +1,7 @@
 /**
   * Run SonarQube Quality Gate
   *
-  * @param args Map of optional variables
+  * @param paramArgs Map of optional variables
   * [
   *   containerName: String     Container name in podTemplate
   *   sonarQubeTimeout: Integer Number of timeout depends on sonarQubeUnit
@@ -10,7 +10,7 @@
   * ]
   */
 def call(
-  Map args = [:]
+  Map paramArgs = [:]
 ) {
 
   // Set default optional arguments
@@ -20,7 +20,7 @@ def call(
     containerName: 'maven'
   ]
   // Replace default optional arguments with parametered arguments
-  private def args = defaultArgs << args
+  private def args = defaultArgs << paramArgs
 
   stage("SonarQube Quality Gate") {
     container(args.containerName) {

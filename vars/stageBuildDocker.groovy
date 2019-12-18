@@ -11,7 +11,7 @@
   * @param imgRepoJenkinsCred String of Jenkins Credentials name
   * @param imgNamePrefix String of Docker Image Prefix
   *                      eg. private.registry.com/username
-  * @param args Map of optional variables
+  * @param paramArgs Map of optional variables
   * [
   *   containerName: String           Container name in podTemplate
   *   mavenSettingsFilePath: String   Custom Maven settings file path
@@ -24,7 +24,7 @@ def call(
   imgRepoServerUrl,
   imgRepoJenkinsCred,
   imgNamePrefix,
-  Map args = [:]
+  Map paramArgs = [:]
 ) {
   // Set default optional arguments
   private def defaultArgs = [
@@ -32,7 +32,7 @@ def call(
     mavenSettingsFilePath: ''
   ]
   // Replace default optional arguments with parametered arguments
-  private def args = defaultArgs << args
+  private def args = defaultArgs << paramArgs
 
   stage('Build and Push Docker Image') {
     container(args.containerName) {
