@@ -46,7 +46,6 @@ def call(
 
           // In case of we build multiple images per git repository
           imgNames.each { item ->
-            echo "Start building ${item} image [${imgFullName}:${imgTag}]"
 
             // Build variables
             imgFullName = "${imgNamePrefix}/${item}"
@@ -55,6 +54,7 @@ def call(
             } else {
               dockerfile = "Dockerfile"
             }
+            echo "Start building ${item} image [${imgFullName}:${imgTag}]"
 
             // Search and replace Maven custom settings file parameter
             if(!args.mavenSettingsFilePath.isEmpty()) {
