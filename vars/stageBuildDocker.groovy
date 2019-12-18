@@ -58,7 +58,7 @@ def call(
 
             // Search and replace Maven custom settings file parameter
             if(!args.mavenSettingsFilePath.isEmpty()) {
-              sh "sed -i 's!\\(RUN .*\\)-s .* \\(.*\\)!\\1-s ${args.mavenSettingsFilePath}\\2!g' ${dockerfile}"
+              sh "sed -i 's!\\(RUN .*\\)-s .* \\(.*\\)!\\1-s ${args.mavenSettingsFilePath} \\2!g' ${dockerfile}"
             }
 
             // Build and Push Docker Image
