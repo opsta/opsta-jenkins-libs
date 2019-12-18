@@ -1,4 +1,12 @@
-// Prepare podTemplate
+/**
+  * Prepare podTemplate
+  *
+  * @param podType String to map podTemplate with inPodMap
+  * @param projectName String of project name
+  * @param k8sCloudName String of Jenkins Kubernetes Cloud Name
+  * @param podTemplateArgs Map is the same as podTemplate
+  * @param body Closure to run steps within node()
+  */
 def call(
   String podType,
   String projectName,

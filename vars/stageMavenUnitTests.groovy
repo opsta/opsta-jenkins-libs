@@ -1,17 +1,35 @@
-// Run Maven Unit Tests
+/**
+  * Run Maven Unit Tests
+  *
+  * @param args Map of optional variables
+  * [
+  *   containerName: String         Container name in podTemplate
+  *   mavenSettingsFilePath: String Custom Maven settings file path
+  *                                 eg. ./.m2/maven-mirror-settings.yml
+  *   jUnitReportPath: String       JUnit Output Report Path
+  * ]
+  */
 def call(
-  String settingsFilePath = '',
-  String containerName = 'maven',
-  String jUnitReportPath = ''
+  Map args = [:]
 ) {
+
+  // Set default optional arguments
+  private def defaultArgs = [
+    settingsFilePath = '',
+    containerName = 'maven',
+    jUnitReportPath = ''
+  ]
+  // Replace default optional arguments with parametered arguments
+  private def args = defaultArgs << args
+
   try {
     stage('Maven Unit Tests') {
-      container(containerName) {
+      container(args.containerName) {
 
         // Check if need custom maven settings
         settingsFilePathParameter = ''
-        if(!settingsFilePath.isEmpty()) {
-          settingsFilePathParameter = "-s ${settingsFilePath}"
+        if(!args.settingsFilePath.isEmpty()) {
+          settingsFilePathParameter = "-s ${args.settingsFilePath}"
         }
 
         sh """
@@ -22,8 +40,8 @@ def call(
   } catch(Exception e) {
     currentBuild.result = 'FAILURE'
   } finally {
-    if(!jUnitReportPath.isEmpty()) {
-        junit ${jUnitReportPath}
+    if(!args.jUnitReportPath.isEmpty()) {
+        junit ${args.jUnitReportPath}
     }
     // Stop job when failure
     if(currentBuild.result == 'FAILURE') {

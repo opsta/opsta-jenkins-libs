@@ -1,18 +1,36 @@
-// Run OWASP Dependency Check with Maven
+/**
+  * Run OWASP Dependency Check with Maven
+  *
+  * @param args Map of optional variables
+  * [
+  *   containerName: String       Container name in podTemplate
+  *   odcInstallation: String     OWASP Dependency Check Installation Name in Jenkins
+  *   owaspReportFileName: String OWASP output report file name
+  *   owaspDataPath: String       OWASP Download Data Path
+  * ]
+  */
 def call(
-	String odcInstallation = 'dependency-check',
-  String containerName = 'maven',
-	String owaspReportFileName = 'dependency-check-report.xml',
-	String owaspDataPath = '/home/jenkins/dependency-check-data'
+  Map args = [:]
 ) {
+
+  // Set default optional arguments
+  private def defaultArgs = [
+    odcInstallation: 'dependency-check',
+    containerName: 'maven',
+    owaspReportFileName: 'dependency-check-report.xml',
+    owaspDataPath: '/home/jenkins/dependency-check-data'
+  ]
+  // Replace default optional arguments with parametered arguments
+  private def args = defaultArgs << args
+
   stage('Run OWASP Dependency Check with Maven') {
-    container(containerName) {
+    container(args.containerName) {
       dependencycheck(
-        additionalArguments: "--out ${owaspReportFileName} --data ${owaspDataPath}", 
-        odcInstallation: odcInstallation
+        additionalArguments: "--out ${args.owaspReportFileName} --data ${args.owaspDataPath}", 
+        odcInstallation: args.odcInstallation
       )
       dependencyCheckPublisher(
-        pattern: owaspReportFileName
+        pattern: args.owaspReportFileName
       )
     }
   }
