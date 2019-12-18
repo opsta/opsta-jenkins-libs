@@ -41,7 +41,7 @@ def call(
     currentBuild.result = 'FAILURE'
   } finally {
     if(!args.jUnitReportPath.isEmpty()) {
-        junit ${args.jUnitReportPath}
+        junit args.jUnitReportPath
     }
     // Stop job when failure
     if(currentBuild.result == 'FAILURE') {
