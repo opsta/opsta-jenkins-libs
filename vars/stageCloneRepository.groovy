@@ -3,7 +3,7 @@
   *
   * @return scmVars Object
   */
-def call()
+def call() {
   stage('Clone repository') {
     scmVars = checkout scm
   }
