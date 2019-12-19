@@ -38,6 +38,8 @@ def call(
       }
     }
   } catch(Exception e) {
+    // Print error
+    echo e.toString()
     currentBuild.result = 'FAILURE'
   } finally {
     if(!args.jUnitReportPath.isEmpty()) {
