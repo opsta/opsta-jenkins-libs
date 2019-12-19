@@ -35,10 +35,10 @@ def call(
   // Replace default optional arguments with parametered arguments
   private def args = defaultArgs << paramArgs
 
-  
-  stage("${appName} Acceptance Test (Robotframework)") {
-    container(args.containerName) {
-      try {
+  try {
+    stage("${appName} Acceptance Test (Robotframework)") {
+      container(args.containerName) {
+
         // Clean tests and reports directory, copy robot test files and run test
         // then copy results to output directory
         sh """
@@ -51,17 +51,20 @@ def call(
           export CONTEXT_PATH=${args.contextPath}
           run-tests-in-virtual-screen.sh
         """
-      } catch(Exception e) {
-        // Print error
-        echo e.toString()
-        currentBuild.result = 'FAILURE'
-      } finally {
-        // Copy report output ready for publish
-        sh """
-          rm -rf ${args.robotOutputPath}/*
-          cp -av ${args.robotReportsPath}/* ${args.robotOutputPath}/
-        """
       }
+    }
+  } catch(Exception e) {
+    // Print error
+    echo e.toString()
+    currentBuild.result = 'FAILURE'
+  } finally {
+    // Need to be outside stage to make stage show failed
+    container(args.containerName) {
+      // Copy report output ready for publish
+      sh """
+        rm -rf ${args.robotOutputPath}/*
+        cp -av ${args.robotReportsPath}/* ${args.robotOutputPath}/
+      """
     }
   }
 }
