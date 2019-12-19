@@ -28,7 +28,7 @@ def call(
       step([
         $class: 'RobotPublisher',
         disableArchiveOutput: true,
-        outputPath: "${robotOutputBasePath}",
+        outputPath: args.robotOutputBasePath,
         logFileName: '**/log.html',
         outputFileName: '**/output.xml',
         reportFileName: '**/report.html',
