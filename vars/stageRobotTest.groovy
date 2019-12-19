@@ -50,9 +50,6 @@ def call(
           export BASE_URL=${baseUrl}
           export CONTEXT_PATH=${args.contextPath}
           run-tests-in-virtual-screen.sh
-
-          rm -rf ${args.robotOutputPath}/*
-          cp -av ${args.robotReportsPath}/* ${args.robotOutputPath}/
         """
       }
     }
@@ -60,5 +57,11 @@ def call(
     // Print error
     echo e.toString()
     currentBuild.result = 'FAILURE'
+  } finally {
+    // Copy report output ready for publish
+    sh """
+      rm -rf ${args.robotOutputPath}/*
+      cp -av ${args.robotReportsPath}/* ${args.robotOutputPath}/
+    """
   }
 }
