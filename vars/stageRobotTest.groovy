@@ -58,7 +58,5 @@ def call(
     }
   } catch(Exception e) {
     currentBuild.result = 'FAILURE'
-    publishRobotResult(args)
-    sh "exit 1"
   }
 }
