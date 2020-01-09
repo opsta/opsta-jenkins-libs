@@ -1,5 +1,19 @@
-// Prepare podTemplate
-def call(String podType, String projectName, String k8sCloudName = projectName, Map podTemplateArgs = [:], Closure body) {
+/**
+  * Prepare podTemplate
+  *
+  * @param podType String to map podTemplate with inPodMap
+  * @param projectName String of project name
+  * @param k8sCloudName String of Jenkins Kubernetes Cloud Name
+  * @param podTemplateArgs Map is the same as podTemplate
+  * @param body Closure to run steps within node()
+  */
+def call(
+  String podType,
+  String projectName,
+  String k8sCloudName = projectName,
+  Map podTemplateArgs = [:],
+  Closure body
+) {
 
   // Assign default containers and volumes for each type of deployment
   // Please bump version if you update containers or volumes
@@ -8,13 +22,19 @@ def call(String podType, String projectName, String k8sCloudName = projectName, 
       version: "0.1.0",
       containers: [
         // Don't use alpine version. It having problem with forking JVM such as running surefire and junit testing
+        // https://hub.docker.com/_/openjdk?tab=tags
         containerTemplate(name: 'java', image: 'openjdk:11.0.5-jdk-stretch', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'maven', image: 'maven:3.6.3-jdk-11-slim', ttyEnabled: true, command: 'cat'),
+        // https://hub.docker.com/_/maven?tab=tags
+        containerTemplate(name: 'maven', image: 'maven:3.6.3-jdk-11', ttyEnabled: true, command: 'cat'),
+        // https://hub.docker.com/_/docker?tab=tags
         containerTemplate(name: 'docker', image: 'docker:19.03.5-dind', ttyEnabled: true, privileged: true,
           command: 'dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2'),
-        containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.16.1', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.16.3', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'robot', image: 'ppodgorsek/robot-framework:3.4.0', ttyEnabled: true, command: 'cat')
+        // https://hub.docker.com/r/lachlanevenson/k8s-helm/tags
+        containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v3.0.2', ttyEnabled: true, command: 'cat'),
+        // https://hub.docker.com/r/lachlanevenson/k8s-kubectl/tags
+        containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.16.4', ttyEnabled: true, command: 'cat'),
+        // https://hub.docker.com/r/ppodgorsek/robot-framework/tags
+        containerTemplate(name: 'robot', image: 'ppodgorsek/robot-framework:3.5.0', ttyEnabled: true, command: 'cat')
       ],
       volumes: [
         // Mount NFS as PVC for caching
