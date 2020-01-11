@@ -33,7 +33,7 @@ def call(
 
   // Set default optional arguments
   private def defaultArgs = [
-    dockerContainerName: 'docker'
+    dockerContainerName: 'docker',
     gitContainerName: 'git'
   ]
   // Replace default optional arguments with parametered arguments
