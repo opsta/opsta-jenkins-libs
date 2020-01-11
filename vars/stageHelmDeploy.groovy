@@ -12,6 +12,7 @@
   *   containerName: String Container name in podTemplate
   *   helmValueFile: String Helm value file path
   *   helmChartPath: String Helm Chart directory path
+  *   helmExtraParams: String of extra parameters for helm command
   * ]
   */
 def call(
@@ -27,7 +28,8 @@ def call(
   private def defaultArgs = [
     containerName: 'helm',
     helmValueFile: "k8s/helm-values/${envName}/values-${projectName}-${envName}-${appName}.yaml",
-    helmChartPath: 'k8s/helm'
+    helmChartPath: 'k8s/helm',
+    helmExtraParams: ''
   ]
   // Replace default optional arguments with parametered arguments
   private def args = defaultArgs << paramArgs
@@ -40,7 +42,7 @@ def call(
           cat $KUBECONFIG > ~/.kube/config
           sed -i 's/COMMIT_ID: CHANGE_COMMIT_ID/COMMIT_ID: ${scmVars.GIT_COMMIT}/g' ${args.helmValueFile}
           helm upgrade -i -f ${args.helmValueFile} --namespace ${projectName}-${envName} --wait \
-            ${projectName}-${envName}-${appName} ${args.helmChartPath}
+            ${args.helmExtraParams} ${projectName}-${envName}-${appName} ${args.helmChartPath}
           """
       }
     }
