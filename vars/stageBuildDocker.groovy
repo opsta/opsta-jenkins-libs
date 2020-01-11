@@ -1,8 +1,8 @@
 /**
   * Build and push Docker Image
   *
-  * @param imgNames List of Docker Images name
-  *                 eg. ['module-1', 'module-2']
+  * @param imgNames String or List of Docker Images name
+  *                 eg. 'myapp' or ['module-1', 'module-2']
   * @param imgTag String of Docker Image Tag
   *                 eg. dev
   * @param imgRepoServerUrl String of Private Docker Registry Server Url 
@@ -44,12 +44,15 @@ def call(
         // Authen with Private Registry
         docker.withRegistry("${imgRepoServerUrl}", "${imgRepoJenkinsCred}") {
 
+          // Convert to list if imgNames is String
+          def imgNamesList = (imgNames instanceof List) ? imgNames : [imgNames]
+
           // In case of we build multiple images per git repository
-          imgNames.each { item ->
+          imgNamesList.each { item ->
 
             // Build variables
             imgFullName = "${imgNamePrefix}/${item}"
-            if (imgNames.size() > 1) {
+            if (imgNamesList.size() > 1) {
               dockerfile = "Dockerfile.${item}"
             } else {
               dockerfile = "Dockerfile"
