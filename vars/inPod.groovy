@@ -17,7 +17,7 @@ def call(
 
   // Assign default containers and volumes for each type of deployment
   // Please bump version if you update containers or volumes
-  private static final inPodMap = [
+  private final inPodMap = [
     java: [
       version: "0.2.0",
       containers: [
