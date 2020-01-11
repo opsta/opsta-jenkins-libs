@@ -48,8 +48,8 @@ def call(
           cp -av ${robotFileTestsPath} ${args.robotTestsPath}/
           export ROBOT_OPTIONS=" \
             -v BROWSER:${args.testBrowser} \
-            -v BASE_URL=${baseUrl} \
-            -v CONTEXT_PATH=${args.contextPath}"
+            -v BASE_URL:${baseUrl} \
+            -v CONTEXT_PATH:${args.contextPath}"
           run-tests-in-virtual-screen.sh
         """
       }
