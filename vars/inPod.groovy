@@ -34,7 +34,9 @@ def call(
         // https://hub.docker.com/r/lachlanevenson/k8s-kubectl/tags
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.16.4', ttyEnabled: true, command: 'cat'),
         // https://hub.docker.com/r/ppodgorsek/robot-framework/tags
-        containerTemplate(name: 'robot', image: 'ppodgorsek/robot-framework:3.5.0', ttyEnabled: true, command: 'cat')
+        containerTemplate(name: 'robot', image: 'ppodgorsek/robot-framework:3.5.0', ttyEnabled: true, command: 'cat'),
+        // https://hub.docker.com/r/alpine/git/tags
+        containerTemplate(name: 'git', image: 'alpine/git:1.0.7', ttyEnabled: true, command: 'cat')
       ],
       volumes: [
         // Don't use NFS, It does not works well
