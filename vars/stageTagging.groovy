@@ -42,7 +42,9 @@ def call(
   stage("Docker tag ${imgNames} production image") {
     container(args.dockerContainerName) {
       docker.withRegistry(imgRepoServerUrl, imgRepoJenkinsCred) {
-        docker.image("${imgFullName}:${imgUatTag}").push(imgPrdTag)
+        uatImage = docker.image("${imgFullName}:${imgUatTag}")
+        uatImage.pull()
+        uatImage.push(imgPrdTag)
       }
     }
   }
