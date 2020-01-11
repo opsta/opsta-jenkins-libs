@@ -46,9 +46,10 @@ def call(
           mkdir -p ${args.robotTestsPath} ${args.robotOutputPath}
           rm -rf ${args.robotTestsPath}/* ${args.robotReportsPath}/*
           cp -av ${robotFileTestsPath} ${args.robotTestsPath}/
-          export BROWSER=${args.testBrowser}
-          export BASE_URL=${baseUrl}
-          export CONTEXT_PATH=${args.contextPath}
+          export ROBOT_OPTIONS=" \
+            -v BROWSER:${args.testBrowser} \
+            -v BASE_URL=${baseUrl} \
+            -v CONTEXT_PATH=${args.contextPath}"
           run-tests-in-virtual-screen.sh
         """
       }
