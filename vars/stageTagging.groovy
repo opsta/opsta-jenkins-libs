@@ -50,7 +50,7 @@ def call(
   }
 
   stage('Git tag version') {
-    container(gitContainerName) {
+    container(args.gitContainerName) {
       sshagent(credentials: [gitPushJenkinsCred]) {
         checkout([
           $class: 'GitSCM',
