@@ -52,7 +52,7 @@ def call(
 
             // Build variables
             imgFullName = "${imgNamePrefix}/${item}"
-            if (imgNamesList.size() > 1) {
+            if(imgNamesList.size() > 1) {
               dockerfile = "Dockerfile.${item}"
             } else {
               dockerfile = "Dockerfile"
