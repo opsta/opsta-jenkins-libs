@@ -15,10 +15,10 @@ def call(branch = '') {
     } else {
 
       // Checkout Branch
+      checkout scm
       scmVars = checkout scm: [
         $class: 'GitSCM',
-        branches: [[name: branch]],
-        extensions: scm.extensions + [[$class: 'CloneOption', noTags: false, reference: '', shallow: false]]
+        branches: [[name: branch]]
       ]
 
       // Need to assign GIT_COMMIT because to this bug https://issues.jenkins-ci.org/browse/JENKINS-45489
